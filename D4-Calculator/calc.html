@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Calculator</title>
+    <style>
+       body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f4f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.calculator {
+    background: #dbcaa2;
+    padding: 50px 35px;
+    border-radius: 15px;
+    width: 360px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+input {
+    width: 350px;
+    height: 80px;
+    margin-bottom: 10px;
+    font-size: 24px;
+    text-align: right;
+    padding: 10px;
+    background-color: #eceff1;
+    border: none;
+    border-radius: 8px;
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+}
+
+button {
+    padding: 20px;
+    font-size: 22px;
+    cursor: pointer;
+    background-color: #fcf2d9;
+    border: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: #e5d7b5;
+}
+
+button:active {
+    background-color: #e5d7b5;
+}
+
+.extra-operations {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    gap: 15px;
+}
+
+.extra-operations button {
+    width: 48%;
+    background-color: #8f7842;
+    color: white;
+    font-size: 22px;
+    border-radius: 10px;
+}
+
+.extra-operations button:hover {
+    background-color: #796537;
+}
+
+.extra-operations button:active {
+    background-color: #796537;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <input type="text" id="display" disabled>
+        <div class="buttons">
+            <button onclick="clearDisplay()">C</button>
+            <button onclick="deleteLastChar()">DEL</button> 
+            <button onclick="appendOperator('%')">%</button> 
+            <button onclick="appendOperator('/')">/</button>
+
+            <button onclick="appendNumber(7)">7</button>
+            <button onclick="appendNumber(8)">8</button>
+            <button onclick="appendNumber(9)">9</button>
+            <button onclick="appendOperator('*')">*</button>
+
+            <button onclick="appendNumber(4)">4</button>
+            <button onclick="appendNumber(5)">5</button>
+            <button onclick="appendNumber(6)">6</button>
+            <button onclick="appendOperator('+')">+</button>
+
+            <button onclick="appendNumber(1)">1</button>
+            <button onclick="appendNumber(2)">2</button>
+            <button onclick="appendNumber(3)">3</button>
+            <button onclick="appendOperator('-')">-</button>
+            
+            <button onclick="appendNumber(0)">0</button>
+            <button onclick="appendOperator('.')">.</button>
+            <button onclick="appendOperator('(')">(</button>
+            <button onclick="appendOperator(')')">)</button>
+            
+        </div>
+
+        <div class="extra-operations">
+            <button onclick="calculate()">=</button>
+            <button onclick="square()">x²</button>
+            <button onclick="sqrt()">√</button>
+        </div>
+        
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+
+        // Function to clear the display
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        // Function to delete the last character from the display
+        function deleteLastChar() {
+            var currentDisplay = document.getElementById("display").value;
+            display.value = currentDisplay.slice(0, -1);  // Remove the last character
+        }
+
+        // Function to append numbers
+        function appendNumber(number) {
+            display.value += number;
+        }
+
+        // Function to append operators or parentheses
+        function appendOperator(operator) {
+            display.value += operator;
+        }
+
+        // Function to calculate the result
+        function calculate() {
+            try {
+                let result = eval(display.value);  // Evaluate the expression
+                
+                if (isNaN(result) || !isFinite(result)) {
+                    alert("Invalid calculation result.");
+                    display.value = '';
+                } else {
+                    display.value = result;
+                }
+            } catch (error) {
+                alert("Invalid input. Please enter a valid expression.");
+                display.value = '';
+            }
+        }
+
+        // Function for squaring the number
+        function square() {
+            let value = parseFloat(display.value);
+            if (isNaN(value)) {
+                alert("Please enter a valid number.");
+                display.value = '';
+            } else {
+                display.value = value * value;
+            }
+        }
+
+        // Function to calculate the square root
+        function sqrt() {
+            let value = parseFloat(display.value);
+            if (isNaN(value)) {
+                alert("Please enter a valid number.");
+                display.value = '';
+            } else {
+                display.value = Math.sqrt(value);
+            }
+        }
+
+        // Validation function for input
+        display.addEventListener('input', function () {
+            let lastChar = display.value[display.value.length - 1];
+            if (['+', '-', '*', '/'].includes(lastChar)) {
+                alert("Please enter a valid number after the operator.");
+            }
+        });
+    </script>
+
+</body>
+</html>
+
+

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theme Changer</title>
+    <style>
+        body{
+            background-color: white;
+            color: #333;
+            font-family: 'Segoe UI', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .container{
+            text-align:center;
+            margin-top:100px;
+            /* background:grey;
+            padding:20px; */
+        }
+        p{
+            font-size:1.5rem;
+        }
+        #toggle-btn{
+            padding:10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+         #toggle-btn:hover {
+            background-color: #555;
+        }
+                /* DARK MODE STYLES */
+        .dark {
+            background-color: #121212;
+            color: #f0f0f0;
+        }
+
+        .dark #toggle-btn {
+            background-color: #f0f0f0;
+            color: #121212;
+        }
+
+        .dark #toggle-btn:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class = "container">
+        <h1>Day 7 - Theme Changer</h1>
+        <p>Click the button to switch between Dark and Light Mode!</p>
+        <button id="toggle-btn">🌞 Light Mode</button>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById("toggle-btn");
+        const body = document.querySelector('body');
+
+        //apply saved theme on load
+        const savedTheme = localStorage.getItem ("theme");
+        if(savedTheme === 'dark'){
+            body.classList.add("dark");
+            toggleBtn.textContent = "🌞 Light Mode";
+        } else{
+            toggleBtn.textContent = "🌙 Dark Mode";
+        }
+        toggleBtn.addEventListener('click' , () => {
+            body.classList.toggle('dark');
+
+            if(body.classList.contains("dark")){
+                toggleBtn.textContent = "🌞 Light Mode";
+                localStorage.setItem("theme","dark");
+            }else{
+                toggleBtn.textContent = "🌙 Dark Mode";
+                localStorage.setItem("theme", "light");
+            }
+        });
+    </script>
+</body>
+</html>
